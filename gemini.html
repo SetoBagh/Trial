@@ -1,0 +1,592 @@
+यहाँ तपाईँको अनुरोध अनुसार **HTML, CSS, र JavaScript** एउटै फाइलमा (Single File Webpage) तयार गरिएको छ। यो वेबपेज मोबाइल र डेस्कटप दुवैमा राम्रो देखिने गरी (Responsive) डिजाइन गरिएको छ र यसमा "प्रिन्ट/डाउनलोड" फिचर पनि समावेश छ।
+
+तलको कोडलाई कपी गरेर `.html` (उदाहरण: `nwash_curriculum.html`) नाममा सेभ गर्नुहोला।
+
+```html
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NWASH-MIS पाठ्यक्रम - सन्दकपुर गाउँपालिका</title>
+    
+    <!-- Google Fonts for Nepali Support -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Styles */
+        :root {
+            --primary-color: #0284c7; /* Water Blue */
+            --secondary-color: #0f172a; /* Dark Slate */
+            --accent-color: #f59e0b; /* Warning/Highlight */
+            --bg-light: #f8fafc;
+            --text-color: #334155;
+            --border-color: #e2e8f0;
+            --white: #ffffff;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .sidebar-header p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .nav-links li a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-links li a:hover, .nav-links li a.active {
+            background-color: #e0f2fe;
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px 40px;
+        }
+
+        /* Header Area in Main Content */
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header-titles h1 {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .btn-print {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .btn-print:hover {
+            background-color: #0369a1;
+        }
+
+        /* Sections */
+        section {
+            background: var(--white);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            scroll-margin-top: 20px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 15px 0 10px;
+            font-size: 1.2rem;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--secondary-color);
+        }
+
+        /* Badges/Tags */
+        .tag {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        /* Accordion for Schedule */
+        details {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        summary {
+            background-color: #f8fafc;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        .details-content {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Quotes/Notes */
+        .note-box {
+            background-color: #fffbeb;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1100;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+                padding-top: 60px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar, .menu-toggle, .btn-print {
+                display: none !important;
+            }
+            .main-content {
+                margin: 0;
+                padding: 0;
+            }
+            .app-container {
+                display: block;
+            }
+            section {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+            details[open] summary::after { content: ''; }
+            details { border: none; }
+            .details-content { display: block !important; padding: 0; border: none;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Menu Button -->
+    <button class="menu-toggle" onclick="toggleSidebar()">☰ मेनु</button>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>NWASH पाठ्यक्रम</h2>
+                <p>सन्दकपुर गाउँपालिका</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#intro" class="active">परिचय र सन्दर्भ</a></li>
+                <li><a href="#legal">कानुनी तथा नीतिगत आधार</a></li>
+                <li><a href="#service-ladder">Service Ladder (सेवा तह)</a></li>
+                <li><a href="#enumerator">गणकको भूमिका</a></li>
+                <li><a href="#technical">प्राविधिक ज्ञान</a></li>
+                <li><a href="#hygiene">सरसफाइ र स्वच्छता</a></li>
+                <li><a href="#schedule">तालिम कार्यतालिका</a></li>
+                <li><a href="#annex">अनुसूची र फारमहरू</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <div class="header-titles">
+                    <h1>प्राविधिक गणक पाठ्यक्रम</h1>
+                    <p>NWASH-MIS तथ्याङ्क संकलन तथा WASH Plan तर्जुमा</p>
+                </div>
+                <button class="btn-print" onclick="window.print()">
+                    🖨️ डाउनलोड / प्रिन्ट
+                </button>
+            </div>
+
+            <!-- 1. Introduction & Context -->
+            <section id="intro">
+                <h2>1. सन्दकपुर गाउँपालिकाको सन्दर्भ</h2>
+                <p>यो पाठ्यक्रम सन्दकपुर गाउँपालिकाको भौगोलिक र जनसांख्यिकीय विशिष्टतालाई ध्यानमा राखी तयार पारिएको हो।</p>
+                
+                <h3>१.१ भौगोलिक अवस्था</h3>
+                <ul>
+                    <li><strong>अवस्थिति:</strong> पहाडी/हिमाली भू-भाग, यातायातको पहुँच र कठिनाइहरू।</li>
+                    <li><strong>जलस्रोत:</strong> मुहानहरूको अवस्था, सुख्खायाममा पानीको उपलब्धता, र भू-क्षयको जोखिम।</li>
+                    <li><strong>नक्सांकन:</strong> GIS आधारभूत नक्सा र वडा सिमानाहरूको जानकारी।</li>
+                </ul>
+
+                <h3>१.२ जनसांख्यिकी (जनगणना २०७८)</h3>
+                <p>तथ्याङ्क संकलन गर्दा निम्न विवरणहरू वडागत रूपमा अद्यावधिक गर्नुपर्नेछ:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>विवरण</th>
+                            <th>आवश्यक तथ्याङ्क</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>जनसंख्या</td>
+                            <td>कुल जनसंख्या, पुरुष/महिला, समावेशी समूह</td>
+                        </tr>
+                        <tr>
+                            <td>घरधुरी</td>
+                            <td>कुल घरसंख्या, संस्थागत घरहरू (विद्यालय/स्वास्थ्यचौकी)</td>
+                        </tr>
+                        <tr>
+                            <td>हालको अवस्था</td>
+                            <td>खानेपानी र सरसफाइमा पहुँचको विद्यमान प्रतिशत</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 2. Legal Framework -->
+            <section id="legal">
+                <h2>2. कानुनी तथा नीतिगत आधार</h2>
+                <h3>३.१ नेपालको संविधान र दिगो विकास लक्ष्य (SDGs)</h3>
+                <ul>
+                    <li><strong>धारा ३५ (४):</strong> प्रत्येक नागरिकलाई स्वच्छ खानेपानी तथा सरसफाइमा पहुँचको हक।</li>
+                    <li><strong>SDG 6:</strong> सन् २०३० सम्म सबैका लागि खानेपानी र सरसफाइको उपलब्धता।</li>
+                </ul>
+
+                <h3>३.२ WASH Plan को उद्देश्यहरू</h3>
+                <ul>
+                    <li>पालिकास्तरमा खानेपानी, सरसफाइ र स्वच्छताको यथार्थ अवस्था पहिचान।</li>
+                    <li>प्राथमिकताका आधारमा योजना छनोट र बजेट विनियोजन।</li>
+                    <li>दिगोपन (Sustainability) सुनिश्चित गर्ने।</li>
+                </ul>
+
+                <h3>३.३ WASH Plan कार्यविधि, २०८१</h3>
+                <p>क्षेत्रगत सूचना प्रणाली (NWASH MIS) मा आधारित भई योजना तर्जुमा गर्ने प्रक्रिया र चरणहरू।</p>
+            </section>
+
+            <!-- 3. Ladder of Services -->
+            <section id="service-ladder">
+                <h2>3. Ladder of Services (सेवाका तहहरू)</h2>
+                <div class="note-box">
+                    गणकले तथ्याङ्क भर्दा JMP (Joint Monitoring Programme) को मापदण्ड अनुसार वर्गीकरण गर्नुपर्दछ।
+                </div>
+
+                <h3>४.१ खानेपानी (Water Supply)</h3>
+                <ul>
+                    <li><span class="tag">Safely Managed</span> घरभित्रै उपलब्ध, आवश्यकता अनुसार आउने, र गुणस्तर प्रमाणित (E.coli मुक्त)।</li>
+                    <li><span class="tag">Basic</span> सुधारिएको स्रोत, ३० मिनेट भित्र (आवत-जावत) पानी ल्याउन सकिने।</li>
+                    <li><span class="tag">Limited</span> सुधारिएको स्रोत तर ३० मिनेट भन्दा बढी समय लाग्ने।</li>
+                    <li><span class="tag">Unimproved</span> असुरक्षित इनार वा मुहान।</li>
+                    <li><span class="tag">Surface Water</span> नदी, खोला, वा तालको पानी सीधै पिउने।</li>
+                </ul>
+
+                <h3>४.२ सरसफाइ (Sanitation)</h3>
+                <ul>
+                    <li><span class="tag">Safely Managed</span> सुधारिएको शौचालय, दिसापिसाब सुरक्षित विसर्जन वा प्रशोधन।</li>
+                    <li><span class="tag">Basic</span> सुधारिएको शौचालय, एक परिवारले मात्र प्रयोग गर्ने।</li>
+                    <li><span class="tag">Limited</span> सुधारिएको तर साझा (Shared) शौचालय।</li>
+                    <li><span class="tag">Open Defecation</span> खुल्ला दिसापिसाब।</li>
+                </ul>
+            </section>
+
+            <!-- 4. Enumerator Role -->
+            <section id="enumerator">
+                <h2>4. गणकको भूमिका र जिम्मेवारी</h2>
+                
+                <h3>५.१ मुख्य जिम्मेवारीहरू</h3>
+                <ul>
+                    <li><strong>Inventory & Sustainability:</strong> NWASH एप प्रयोग गरी आयोजनाहरूको सूची र दिगोपनको तथ्याङ्क संकलन गर्ने।</li>
+                    <li><strong>तथ्याङ्क गुणस्तर:</strong> GPS को शुद्धता (Accuracy), फोटोको स्पष्टता र फारमको पूर्णता यकिन गर्ने।</li>
+                    <li><strong>गोपनियता:</strong> उत्तरदाताको विवरण गोप्य राख्ने र "सहमति (Informed Consent)" लिने।</li>
+                </ul>
+
+                <h3>५.२ NWASH MIS एप सञ्चालन</h3>
+                <ul>
+                    <li>Login र Project Setup।</li>
+                    <li>Offline मोडमा डाटा इन्ट्री र Online आएपछि Sync गर्ने विधि।</li>
+                    <li>नक्सा (Map) मा संरचनाहरू पिन गर्ने तरिका।</li>
+                </ul>
+            </section>
+
+            <!-- 5. Technical Skills -->
+            <section id="technical">
+                <h2>5. सेवा सम्बन्धी प्राविधिक ज्ञान</h2>
+                <p>प्राविधिक गणकले खानेपानी आयोजनाको भौतिक र प्राविधिक पक्ष बुझ्नुपर्दछ।</p>
+
+                <h3>६.१ खानेपानी प्रणालीका प्रकार</h3>
+                <ul>
+                    <li><strong>Gravity Fed:</strong> मुहान, इन्टेक, पाइपलाइन, BPT, रिजर्भ्वायर ट्याङ्की, धारा।</li>
+                    <li><strong>Pumping:</strong> लिफ्टिङ प्रविधि, पम्पको प्रकार र सञ्चालन।</li>
+                </ul>
+
+                <h3>६.२ पानीको गुणस्तर (NDWQS 2079)</h3>
+                <p>फिल्डमा गर्न सकिने सामान्य परीक्षणहरू:</p>
+                <ul>
+                    <li><strong>FRC (Free Residual Chlorine):</strong> क्लोरिनको मात्रा (०.२ - ०.५ mg/L)।</li>
+                    <li><strong>pH:</strong> पानीको अम्लीय वा क्षारीयपन (६.५ - ८.५)।</li>
+                    <li><strong>Turbidity:</strong> धमिलोपना।</li>
+                    <li><strong>E. coli:</strong> दिसाजन्य किटाणुको उपस्थिति (Presence/Absence vial प्रयोग)।</li>
+                </ul>
+
+                <h3>६.३ सरसफाइ पूर्वाधार</h3>
+                <ul>
+                    <li>शौचालयका प्रकार (सेप्टिक ट्याङ्क, रिङ पिट, ईको-सान)।</li>
+                    <li>विद्यालय र स्वास्थ्य संस्थामा लैङ्गिक तथा अपाङ्गता मैत्री संरचना।</li>
+                </ul>
+            </section>
+
+            <!-- 6. Hygiene -->
+            <section id="hygiene">
+                <h2>6. Hygiene Promotion (स्वच्छता प्रवर्द्धन)</h2>
+                <ul>
+                    <li><strong>व्यवहार परिवर्तन (BCC):</strong> समुदायलाई सम्झाउने तरिका।</li>
+                    <li><strong>हात धुने ५ अवस्था:</strong> खाना खानु अघि, दिसापिसाब पछि, आदि।</li>
+                    <li><strong>MHM:</strong> महिनावारी स्वच्छता व्यवस्थापन।</li>
+                    <li><strong>सुरक्षित पानी:</strong> उमालेर, फिल्टर गरेर वा क्लोरिन राखेर पिउने बानी।</li>
+                </ul>
+            </section>
+
+            <!-- 7. Schedule -->
+            <section id="schedule">
+                <h2>7. ३ दिने तालिम कार्यतालिका (प्रस्तावित)</h2>
+                
+                <details open>
+                    <summary>पहिलो दिन: अवधारणा र कानुनी आधार</summary>
+                    <div class="details-content">
+                        <ul>
+                            <li>09:30 - 10:00: परिचय र उद्देश्य</li>
+                            <li>10:00 - 12:15: सन्दकपुरको भूगोल र जनसांख्यिकी</li>
+                            <li>13:15 - 14:30: WASH Plan कार्यविधि र संविधान</li>
+                            <li>14:45 - 16:15: Ladder of Services (JMP)</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>दोस्रो दिन: NWASH एप र प्राविधिक सत्र</summary>
+                    <div class="details-content">
+                        <ul>
+                            <li>09:30 - 10:30: गणकको भूमिका र नैतिकता</li>
+                            <li>10:45 - 12:30: NWASH App चलाउने अभ्यास (Inventory & Sustainability)</li>
+                            <li>13:30 - 15:00: खानेपानी प्रणाली (Gravity/Pump) को इन्जिनियरिङ</li>
+                            <li>15:15 - 16:30: पानी गुणस्तर परीक्षण (Demo)</li>
+                        </ul>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>तेस्रो दिन: सरसफाइ र फिल्ड अभ्यास</summary>
+                    <div class="details-content">
+                        <ul>
+                            <li>09:30 - 11:00: सरसफाइ पूर्वाधार र फोहोर व्यवस्थापन</li>
+                            <li>11:00 - 12:15: Hygiene Promotion (BCC)</li>
+                            <li>13:15 - 16:00: नमुना फिल्ड अभ्यास (Field Simulation)</li>
+                            <li>16:00 - 16:30: समीक्षा र समापन</li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <!-- 8. Annex -->
+            <section id="annex">
+                <h2>8. अनुसूचीहरू</h2>
+                <h3>Inventory Checklist (मुख्य बुँदा)</h3>
+                <ul>
+                    <li>आयोजनाको नाम र कोड</li>
+                    <li>मुहानको प्रकार (Source Type)</li>
+                    <li>लाभान्वित घरधुरी संख्या</li>
+                    <li>संरचनाको फोटो (ट्याङ्की, धारा, मुहान)</li>
+                    <li>सञ्चालन अवस्था (Functional/Need Repair)</li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- JavaScript for Functionality -->
+    <script>
+        // Toggle Sidebar on Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Close sidebar when clicking a link (on mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    document.getElementById('sidebar').classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll Spy (Highlight active link)
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').includes(current)) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+```
